@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PYTORCH_ROCM_ARCH=gfx1100
+
 ### Some Decoration
 RCol='\e[0m'    # Text Reset
 
@@ -26,11 +28,9 @@ echo -e "${Gre} ----------------------------------------------------------------
 echo -e "${On_Gre} 1. Setting Up Conda Environment Skipped.${RCol}"
 echo -e "${Gre} -----------------------------------------------------------------${RCol}\n"
 
-# # Initialize conda
-# conda init bash
-
-# # Activate the conda environment
-# source activate py_3.9
+# Activate the conda environment
+. "/opt/conda/etc/profile.d/conda.sh"
+conda activate py_3.12
 
 echo -e "\n${Gre} -----------------------------------------------------------------${RCol}"
 echo -e "${On_Gre} 2.  Running CMake with Architecture Spec'd${RCol}"
@@ -53,34 +53,21 @@ echo -e "${On_Gre} 3.  Installing the CMake Build${RCol}"
 echo -e "${Gre} -----------------------------------------------------------------${RCol}\n"
 
 # Install the build with conda or system-wide
-cmake --install . #--prefix $CONDA_PREFIX # use this line if using conda
+cmake --install --prefix $CONDA_PREFIX .
 sudo make install
 
-echo -e "${Gre} -----------------------------------------------------------------${RCol}"
-echo -e "${On_Gre} 4.  Linking with ldconfig${RCol}"
-echo -e "${Gre} -----------------------------------------------------------------${RCol}\n"
-
-# Update shared library cache
+sudo ln -s /usr/local/lib/libctranslate2.so /opt/conda/envs/py_3.12/lib/
 sudo ldconfig
 
-
-
-
-echo -e "\n${Gre} -----------------------------------------------------------------${RCol}"
-echo -e "${On_Gre} Python Package Assembly Omitted ${RCol}"
-echo -e "${Gre} -----------------------------------------------------------------${RCol}\n"
 # Change to the python directory
 # cd ../python
 
-# # everything is functioning up to here, but then the python package build fails
-# # possibly build it in conda then install it outside of conda?
+# everything is functioning up to here, but then the python package build fails
+# possibly build it in conda then install it outside of conda?
 
 # echo -e "${Gre} -----------------------------------------------------------------${RCol}"
 # echo -e "${On_Gre} 5. Setting Up Conda Environment.${RCol}"
 # echo -e "${Gre} -----------------------------------------------------------------${RCol}\n"
-
-# # Initialize conda
-# conda init bash
 
 # # Activate the conda environment
 # source activate py_3.9
@@ -126,9 +113,6 @@ echo -e "${Gre} ----------------------------------------------------------------
 # echo -e "${Gre} -----------------------------------------------------------------${RCol}"
 
 
-echo -e "\n${Gre} -----------------------------------------------------------------${RCol}"
-echo -e "${On_Gre} FINAL. Installing Wheel File.${RCol}"
-echo -e "${Gre} -----------------------------------------------------------------${RCol}\n"
-
-# Install the built wheel
-pip install /src/*.whl
+# echo -e "\n${Gre} -----------------------------------------------------------------${RCol}"
+# echo -e "${On_Gre} FINAL. Installing Wheel File.${RCol}"
+# echo -e "${Gre} -----------------------------------------------------------------${RCol}\n"

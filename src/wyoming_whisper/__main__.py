@@ -74,9 +74,11 @@ async def main() -> None:
         # Download to first data dir by default
         args.download_dir = args.data_dir[0]
 
+    level = logging.DEBUG if args.debug else logging.INFO
     logging.basicConfig(
-        level=logging.DEBUG if args.debug else logging.INFO, format=args.log_format
+        level=level, format=args.log_format
     )
+    logging.getLogger("faster_whisper").setLevel(level)
     _LOGGER.debug(args)
 
     model_name = args.model

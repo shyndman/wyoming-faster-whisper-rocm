@@ -15,4 +15,6 @@ services:
       - "/dev/dri"
       - "/dev/kfd"
     environment:
-      - HSA_OVERRIDE_GFX_VERSION=9.0.0
+      - HSA_OVERRIDE_GFX_VERSION=11.0.0
+      - PYTORCH_ROCM_ARCH="gfx1100"
+      - GFX_ARCH=gfx1100

@@ -1,0 +1,3 @@
+[submodule "src/CTranslate2-rocm"]
+	path = src/CTranslate2-rocm
+	url = https://github.com/arlo-phoenix/CTranslate2-rocm.git
